@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piso WiFi Admin V4</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Hamburger -->
+<div class="menu-btn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+
+    <div class="profile">
+        <div class="avatar">👤</div>
+        <h3 id="adminDisplay">Admin</h3>
+        <p>Administrator</p>
+    </div>
+
+    <a href="#" onclick="showPage('addPage'); return false;">➕ Add Session</a>
+<a href="#" onclick="showPage('activePage'); return false;">🟢 Active Sessions</a>
+<a href="#" onclick="showPage('finishedPage'); return false;">📋 Finished Sessions</a>
+<a href="#" onclick="showPage('settingsPage'); return false;">⚙️ Settings</a>
+<a href="#" onclick="showPage('dashboardPage'); return false;">🏠 Dashboard</a>
+
+    <button
+        class="logout-btn"
+        onclick="logout()">
+        🚪 Logout
+    </button>
+
+</div>
+
+<!-- Main Container -->
+<div class="container">
+
+    <!-- DASHBOARD -->
+    <section
+        id="dashboardPage"
+        class="page active-page">
+
+        <h1>📶 Piso WiFi Dashboard</h1>
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <h2 id="activeCount">0</h2>
+                <p>Active Users</p>
+            </div>
+
+            <div class="stat-card">
+                <h2 id="finishedCount">0</h2>
+                <p>Finished Sessions</p>
+            </div>
+
+            <div class="stat-card">
+                <h2>
+                    ₱<span id="revenue">0</span>
+                </h2>
+                <p>Total Revenue</p>
+            </div>
+
+        </div>
+
+        <div class="panel">
+
+            <h2>Recent Activity</h2>
+
+            <div id="recentActivity">
+                No Activity Yet
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ADD SESSION -->
+    <section
+        id="addPage"
+        class="page">
+
+        <h1>➕ Add Session</h1>
+
+        <div class="panel">
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Customer Name">
+
+            <div class="amount-grid">
+
+                <button
+                onclick="addSession('₱1',1,30)">
+                ₱1
+                <small>30 Minutes</small>
+                </button>
+
+                <button
+                onclick="addSession('₱5',5,120)">
+                ₱5
+                <small>2 Hours</small>
+                </button>
+
+                <button
+                onclick="addSession('₱10',10,300)">
+                ₱10
+                <small>5 Hours</small>
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ACTIVE SESSIONS -->
+    <section
+        id="activePage"
+        class="page">
+
+        <h1>🟢 Active Sessions</h1>
+
+        <div class="panel">
+
+            <input
+                type="text"
+                id="searchUser"
+                placeholder="🔍 Search User"
+                onkeyup="render()">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Package</th>
+                        <th>Remaining</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="activeBody">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- FINISHED -->
+    <section
+        id="finishedPage"
+        class="page">
+
+        <h1>📋 Finished Sessions</h1>
+
+        <div class="panel">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Package</th>
+                        <th>Finished Time</th>
+                    </tr>
+                </thead>
+
+                <tbody id="finishedBody">
+                </tbody>
+
+            </table>
+
+            <button
+            class="export-btn"
+            onclick="exportCSV()">
+            📥 Export CSV
+            </button>
+
+            <button
+            class="clear-btn"
+            onclick="clearHistory()">
+            🗑 Clear History
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- SETTINGS -->
+    <section
+        id="settingsPage"
+        class="page">
+
+        <h1>⚙️ Settings</h1>
+
+        <div class="panel">
+
+            <button
+            onclick="toggleDarkMode()">
+            🌙 Toggle Dark Mode
+            </button>
+
+            <br><br>
+
+            <button
+            onclick="changePassword()">
+            🔑 Change Password
+            </button>
+
+            <br><br>
+
+            <button
+            onclick="clearAllData()">
+            🗑 Clear All Data
+            </button>
+
+        </div>
+
+    </section>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script src="firebase.js"></script>
+<script src="script.js"></script>
+    
+</body>
+</body>
+</html>

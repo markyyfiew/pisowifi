@@ -1,0 +1,387 @@
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* =========================
+   BODY
+========================= */
+
+body{
+    background:#0f172a;
+    color:white;
+    min-height:100vh;
+}
+
+/* =========================
+   HAMBURGER
+========================= */
+
+.menu-btn{
+    position:fixed;
+    top:15px;
+    left:15px;
+    width:45px;
+    height:45px;
+    background:#2563eb;
+    border-radius:10px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    cursor:pointer;
+    z-index:1001;
+}
+
+.menu-btn span{
+    width:22px;
+    height:3px;
+    background:white;
+    border-radius:5px;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    left:-280px;
+    top:0;
+    width:280px;
+    height:100%;
+    background:#1e293b;
+    transition:.3s;
+    z-index:1000;
+    overflow-y:auto;
+    padding:20px;
+}
+
+.sidebar.active{
+    left:0;
+}
+
+.profile{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.avatar{
+    font-size:55px;
+    margin-bottom:10px;
+}
+
+.profile h3{
+    margin-bottom:5px;
+}
+
+.profile p{
+    color:#cbd5e1;
+}
+
+.sidebar a{
+    display:block;
+    text-decoration:none;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:8px;
+    transition:.3s;
+}
+
+.sidebar a:hover{
+    background:#2563eb;
+}
+
+.logout-btn{
+    width:100%;
+    border:none;
+    padding:12px;
+    border-radius:10px;
+    background:#ef4444;
+    color:white;
+    cursor:pointer;
+    margin-top:15px;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container{
+    max-width:1300px;
+    margin:auto;
+    padding:80px 20px 20px;
+}
+
+/* =========================
+   PAGE SYSTEM
+========================= */
+
+.page{
+    display:none;
+}
+
+.active-page{
+    display:block;
+}
+
+/* =========================
+   TITLES
+========================= */
+
+h1{
+    margin-bottom:20px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat-card{
+    background:#1e293b;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.stat-card h2{
+    color:#60a5fa;
+}
+
+/* =========================
+   PANELS
+========================= */
+
+.panel{
+    background:#1e293b;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    margin-bottom:15px;
+    outline:none;
+}
+
+/* =========================
+   PACKAGE BUTTONS
+========================= */
+
+.amount-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:12px;
+}
+
+.amount-grid button{
+    border:none;
+    border-radius:12px;
+    padding:15px;
+    background:#2563eb;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.amount-grid button:hover{
+    transform:translateY(-2px);
+}
+
+.amount-grid button small{
+    display:block;
+    margin-top:5px;
+    font-weight:normal;
+}
+
+/* =========================
+   TABLES
+========================= */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#2563eb;
+}
+
+th,
+td{
+    border:1px solid #334155;
+    padding:10px;
+    text-align:center;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.pause-btn{
+    background:#f59e0b;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.resume-btn{
+    background:#10b981;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.end-btn{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+/* NEW EXTEND BUTTONS */
+
+.extend30-btn{
+    background:#3b82f6;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.extend2h-btn{
+    background:#8b5cf6;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.extend5h-btn{
+    background:#06b6d4;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+/* =========================
+   SETTINGS BUTTONS
+========================= */
+
+.panel button{
+    margin:4px;
+}
+
+/* =========================
+   EXPORT
+========================= */
+
+.export-btn{
+    width:100%;
+    border:none;
+    padding:12px;
+    border-radius:10px;
+    background:#10b981;
+    color:white;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.clear-btn{
+    width:100%;
+    border:none;
+    padding:12px;
+    border-radius:10px;
+    background:#ef4444;
+    color:white;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+/* =========================
+   LIGHT MODE
+========================= */
+
+.light-mode{
+    background:#f1f5f9;
+    color:#111827;
+}
+
+.light-mode .sidebar,
+.light-mode .panel,
+.light-mode .stat-card{
+    background:white;
+    color:#111827;
+}
+
+.light-mode input{
+    border:1px solid #ccc;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .container{
+        padding-top:80px;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .amount-grid{
+        grid-template-columns:1fr;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    td button{
+        margin-bottom:5px;
+    }
+
+}
+.sidebar a.active-link{
+    background:#2563eb;
+}

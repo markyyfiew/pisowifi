@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piso WiFi Client</title>
+
+<style>
+body{
+    background:#0f172a;
+    color:white;
+    font-family:Arial;
+    text-align:center;
+    padding-top:50px;
+}
+
+.box{
+    background:#1e293b;
+    margin:20px;
+    padding:20px;
+    border-radius:15px;
+}
+
+.timer{
+    font-size:45px;
+    color:#60a5fa;
+    font-weight:bold;
+}
+
+.status{
+    margin-top:10px;
+    font-size:18px;
+}
+
+button{
+    margin:10px;
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.pause-btn{
+    background:#f59e0b;
+    color:white;
+}
+
+.resume-btn{
+    background:#10b981;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📶 Piso WiFi</h1>
+
+<div class="box">
+    <h2>Remaining Time</h2>
+    <div id="timer" class="timer">00:00:00</div>
+    <div id="status" class="status">Loading...</div>
+
+    <button class="pause-btn" onclick="pauseSession()">Pause</button>
+    <button class="resume-btn" onclick="resumeSession()">Resume</button>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="firebase.js"></script>
+
+<script>
+
+const sessionsRef = db.ref("sessions");
+
+/* =========================
+   DEVICE ID (PER USER)
+========================= */
+const params = new URLSearchParams(window.location.search);
+const sessionId = params.get("id");
+
+if(!sessionId){
+    alert("No session ID found");
+}
+
+/* =========================
+   SESSION DATA
+========================= */
+let session = null;
+
+/* listen ONLY OWN SESSION */
+sessionsRef.child(sessionId).on("value", snap => {
+    session = snap.val();
+});
+
+/* =========================
+   FORMAT TIME
+========================= */
+function format(ms){
+    if(ms < 0) ms = 0;
+
+    let h = Math.floor(ms / 3600000);
+    let m = Math.floor((ms % 3600000) / 60000);
+    let s = Math.floor((ms % 60000) / 1000);
+
+    return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+
+/* =========================
+   TIMER LOOP (REAL TIME)
+========================= */
+setInterval(() => {
+
+    const timerEl = document.getElementById("timer");
+    const statusEl = document.getElementById("status");
+
+    if(!session){
+        timerEl.innerText = "00:00:00";
+        statusEl.innerText = "No Active Session";
+        return;
+    }
+
+    let remaining = session.paused
+        ? session.remaining
+        : (session.end - Date.now());
+
+    timerEl.innerText = format(remaining);
+
+    if(remaining <= 0){
+        statusEl.innerText = "Expired";
+    } else {
+        statusEl.innerText = session.paused ? "Paused" : "Active";
+    }
+
+}, 1000);
+
+/* =========================
+   PAUSE (CLIENT CONTROL)
+========================= */
+function pauseSession(){
+
+    if(!session) return;
+   sessionsRef.child(sessionId)
+        paused: true,
+        remaining: session.end - Date.now()
+    });
+}
+
+/* =========================
+   RESUME (CLIENT CONTROL)
+========================= */
+function resumeSession(){
+
+    if(!session) return;
+
+   sessionsRef.child(sessionId)
+        paused: false,
+        end: Date.now() + (session.remaining || 0)
+    });
+}
+  const sessionId = "-Ou9aGvwAqVCqwJXnKbc";
+
+sessionsRef.child(sessionId).on("value", snap => {
+    session = snap.val();
+});
+
+</script>
+
+</body>
+</html>
