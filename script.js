@@ -8,7 +8,7 @@ if (localStorage.getItem("isLoggedIn") !== "true") {
 }
 
 /* =========================
-   FIREBASE
+   FIREBASE REFS
 ========================= */
 const sessionsRef = db.ref("sessions");
 const finishedRef = db.ref("finished");
@@ -25,7 +25,6 @@ let revenue = 0;
    FLAGS
 ========================= */
 let isRendering = false;
-let isAdding = false;
 
 /* =========================
    INIT
@@ -75,7 +74,7 @@ revenueRef.on("value", snap => {
 });
 
 /* =========================
-   ADD SESSION (FIXED CORE)
+   ADD SESSION
 ========================= */
 function addSession(label, amount, minutes){
 
@@ -102,9 +101,9 @@ function addSession(label, amount, minutes){
 
         document.getElementById("name").value = "";
 
+        // ✅ FIXED LINK
         const link =
-            window.location.origin +
-            "/client.html?id=" +
+            "https://markyyfiew.github.io/pisowifi/client.html?id=" +
             newRef.key;
 
         alert(
@@ -196,24 +195,25 @@ function endSession(id) {
 }
 
 /* =========================
-   AUTO EXPIRE
+   AUTO EXPIRE (FIXED)
 ========================= */
 setInterval(() => {
 
     const now = Date.now();
 
-    Object.values(sessions || {}).forEach(s => {
-        if (!s || !s.id) return;
+    Object.entries(sessions || {}).forEach(([key, s]) => {
+
+        if (!s) return;
 
         if (!s.paused && s.end <= now) {
-            sessionsRef.child(s.id).remove();
+            sessionsRef.child(key).remove();
         }
     });
 
 }, 5000);
 
 /* =========================
-   RENDER SYSTEM (STABLE)
+   RENDER
 ========================= */
 function render() {
 
@@ -249,12 +249,12 @@ function render() {
             <td>${formatTime(remaining)}</td>
             <td>${s.paused ? "Paused" : "Active"}</td>
             <td>
-                <button onclick="pauseSession('${s.id}')" class="pause-btn">Pause</button>
-                <button onclick="resumeSession('${s.id}')" class="resume-btn">Resume</button>
-                <button onclick="extendTime('${s.id}',30)" class="extend30-btn">+30m</button>
-                <button onclick="extendTime('${s.id}',120)" class="extend2h-btn">+2h</button>
-                <button onclick="extendTime('${s.id}',300)" class="extend5h-btn">+5h</button>
-                <button onclick="endSession('${s.id}')" class="end-btn">End</button>
+                <button onclick="pauseSession('${s.id}')">Pause</button>
+                <button onclick="resumeSession('${s.id}')">Resume</button>
+                <button onclick="extendTime('${s.id}',30)">+30m</button>
+                <button onclick="extendTime('${s.id}',120)">+2h</button>
+                <button onclick="extendTime('${s.id}',300)">+5h</button>
+                <button onclick="endSession('${s.id}')">End</button>
             </td>
         </tr>`;
     });
