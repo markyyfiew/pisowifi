@@ -97,28 +97,50 @@
                 placeholder="Customer Name">
 
             <div class="amount-grid">
+<div class="amount-grid">
 
-                <button
-                onclick="addSession('₱1',1,30)">
-                ₱1
-                <small>30 Minutes</small>
-                </button>
+    <button onclick="addSession('₱1', 1, 15)">
+        ₱1
+        <small>15 Minutes</small>
+    </button>
 
-                <button
-                onclick="addSession('₱5',5,120)">
-                ₱5
-                <small>2 Hours</small>
-                </button>
+    <button onclick="addSession('₱5', 5, 120)">
+        ₱5
+        <small>2 Hours</small>
+    </button>
 
-                <button
-                onclick="addSession('₱10',10,300)">
-                ₱10
-                <small>5 Hours</small>
-                </button>
+    <button onclick="addSession('₱10', 10, 300)">
+        ₱10
+        <small>5 Hours</small>
+    </button>
 
-            </div>
+    <button onclick="addSession('₱15', 15, 600)">
+        ₱15
+        <small>10 Hours</small>
+    </button>
 
-        </div>
+    <button onclick="addSession('₱20', 20, 1200)">
+        ₱20
+        <small>20 Hours</small>
+    </button>
+
+</div>
+                
+    <div class="custom-box">
+
+    <h3>Custom Load</h3>
+
+    <input type="number" id="customAmount" placeholder="Enter pesos">
+
+    <input type="number" id="customHours" placeholder="Enter hours">
+
+    <button onclick="addCustomSession()">
+        ➕ Add Custom Session
+    </button>
+
+ </div>
+                
+ </div>
 
     </section>
 
@@ -197,6 +219,7 @@
         </div>
 
     </section>
+        
 
     <!-- SETTINGS -->
     <section
@@ -246,22 +269,37 @@
 <script src="script.js"></script>
 
 <!-- QR CODE MODAL -->
-<div id="qrContainer" style="display:none; text-align:center; padding:20px;">
-    <h2>📱 Scan QR Code</h2>
+<div id="qrContainer" class="qr-modal">
 
-    <div id="qrcode"></div>
+    <div class="qr-card">
 
-    <br>
+        <h2>📱 Scan to Connect</h2>
 
-    <input
-        type="text"
-        id="sessionLink"
-        readonly
-        style="width:90%;padding:10px;">
+        <p class="qr-subtitle">
+            Scan this QR code using your phone camera
+        </p>
 
-    <br><br>
+        <div id="qrcode"></div>
 
-    <button onclick="closeQR()">Close</button>
+        <div class="session-info">
+            <p>Connection Link</p>
+
+            <input
+                type="text"
+                id="sessionLink"
+                readonly>
+        </div>
+
+        <button class="copy-btn" onclick="copyLink()">
+            📋 Copy Link
+        </button>
+
+        <button class="close-btn-modal" onclick="closeQR()">
+            ✖ Close
+        </button>
+
+    </div>
+
 </div>
 
 </body>
