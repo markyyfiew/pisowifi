@@ -15,8 +15,17 @@ body{
     align-items:center;
     min-height:100vh;
     margin:0;
+    flex-direction:column;
 }
 
+/* TITLE (Client Time) */
+h1{
+    margin-bottom:20px;
+    color:#60a5fa;
+    text-align:center;
+}
+
+/* CARD */
 .box{
     width:90%;
     max-width:400px;
@@ -25,48 +34,50 @@ body{
     border-radius:20px;
     text-align:center;
     box-shadow:0 0 25px rgba(0,0,0,.3);
+    transition:.3s;
 }
 
+.box:hover{
+    transform:translateY(-3px);
+}
+
+/* TIMER */
 .timer{
     font-size:50px;
     font-weight:bold;
     color:#60a5fa;
     margin:15px 0;
+    text-align:center;
 }
 
+/* STATUS */
 .status{
     font-size:18px;
     margin-bottom:10px;
+    text-align:center;
 }
 
+/* NOTE */
 .note{
     color:#94a3b8;
     font-size:14px;
-}
-    h1{
-    margin-bottom:20px;
-    color:#60a5fa;
+    text-align:center;
 }
 
 h2{
     margin-bottom:10px;
+    text-align:center;
 }
-
-.box:hover{
-    transform:translateY(-3px);
-    transition:.3s;
-}
-    
 </style>
 </head>
 
 <body>
 
-<h1>📶 Piso WiFi</h1>
+<h1>📶 Client Time</h1>
 
 <div class="box">
 
-    <h2>Remaining Time</h2>
+    <h2>Time Remaining</h2>
 
     <div id="timer" class="timer">00:00:00</div>
 
@@ -89,9 +100,7 @@ h2{
 
 const sessionsRef = db.ref("sessions");
 
-/* =========================
-   GET SESSION ID FROM URL
-========================= */
+/* GET SESSION ID */
 const params = new URLSearchParams(window.location.search);
 const sessionId = params.get("id");
 
@@ -99,19 +108,14 @@ if(!sessionId){
     document.body.innerHTML = "<h2 style='color:red'>No Session ID Found</h2>";
 }
 
-/* =========================
-   SESSION DATA
-========================= */
+/* SESSION DATA */
 let session = null;
 
-/* listen to ONLY THIS SESSION */
 sessionsRef.child(sessionId).on("value", snap => {
     session = snap.val();
 });
 
-/* =========================
-   FORMAT TIME
-========================= */
+/* FORMAT TIME */
 function format(ms){
     if(ms < 0) ms = 0;
 
@@ -122,9 +126,7 @@ function format(ms){
     return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
 }
 
-/* =========================
-   TIMER LOOP
-========================= */
+/* TIMER LOOP */
 setInterval(() => {
 
     const timerEl = document.getElementById("timer");
@@ -150,10 +152,7 @@ setInterval(() => {
 
 }, 1000);
 
-
-
 </script>
 
 </body>
 </html>
-    
