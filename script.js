@@ -112,19 +112,35 @@ showQR(link);
 }
 function showQR(link){
 
-    document.getElementById("qrContainer").style.display = "block";
+    const modal =
+        document.getElementById("qrContainer");
+
+    modal.style.display = "flex";
 
     document.getElementById("sessionLink").value = link;
 
-    const qrDiv = document.getElementById("qrcode");
+    const qrDiv =
+        document.getElementById("qrcode");
 
     qrDiv.innerHTML = "";
 
-    new QRCode(qrDiv, {
+    new QRCode(qrDiv,{
         text: link,
         width: 250,
         height: 250
     });
+}
+
+function copyLink(){
+
+    const input =
+        document.getElementById("sessionLink");
+
+    input.select();
+
+    document.execCommand("copy");
+
+    alert("Link copied!");
 }
 
 function closeQR(){
@@ -200,10 +216,11 @@ function endSession(id) {
         if (!s) return;
 
         finishedRef.push({
-            name: s.name,
-            label: s.label,
-            finishedAt: new Date().toLocaleString()
-        });
+    name: s.name,
+    label: s.label,
+    reason: "Ended by Admin",
+    finishedAt: new Date().toLocaleString()
+});
 
         sessionsRef.child(id).remove();
     });
@@ -221,8 +238,16 @@ setInterval(() => {
         if (!s) return;
 
         if (!s.paused && s.end <= now) {
-            sessionsRef.child(key).remove();
-        }
+
+    finishedRef.push({
+        name: s.name,
+        label: s.label,
+        reason: "Expired",
+        finishedAt: new Date().toLocaleString()
+    });
+
+    sessionsRef.child(key).remove();
+}
     });
 
 }, 5000);
@@ -263,14 +288,12 @@ function render() {
             <td>${s.label}</td>
             <td>${formatTime(remaining)}</td>
             <td>${s.paused ? "Paused" : "Active"}</td>
-            <td>
-                <button onclick="pauseSession('${s.id}')">Pause</button>
-                <button onclick="resumeSession('${s.id}')">Resume</button>
-                <button onclick="extendTime('${s.id}',30)">+30m</button>
-                <button onclick="extendTime('${s.id}',120)">+2h</button>
-                <button onclick="extendTime('${s.id}',300)">+5h</button>
-                <button onclick="endSession('${s.id}')">End</button>
-            </td>
+        <<td>
+    <button onclick="pauseSession('${s.id}')">Pause</button>
+    <button onclick="resumeSession('${s.id}')">Resume</button>
+    <button onclick="extendCustom('${s.id}')">Extend</button>
+    <button onclick="endSession('${s.id}')">End</button>
+        </td>
         </tr>`;
     });
 
@@ -308,4 +331,180 @@ function showPage(pageId) {
     document.getElementById(pageId)?.classList.add("active-page");
 
     document.getElementById("sidebar")?.classList.remove("active");
-            }
+}
+function clearAllData() {
+    if (!confirm("Clear ALL data? This will delete sessions, history, and revenue.")) {
+        return;
+    }
+
+    // delete sessions
+    sessionsRef.remove();
+
+    // delete finished history
+    finishedRef.remove();
+
+    // reset revenue
+    revenueRef.set(0);
+
+    // reset local UI state
+    sessions = {};
+    finished = [];
+    revenue = 0;
+
+    render();
+
+    alert("All data cleared!");
+}
+//Change password
+function changePassword() {
+    const newPass = prompt("Enter new password:");
+
+    if (!newPass) return;
+
+    localStorage.setItem("adminPassword", newPass);
+
+    alert("Password updated!");
+}
+//TOGGLE DARK MODE
+function toggleDarkMode() {
+    document.body.classList.toggle("light-mode");
+
+    if (document.body.classList.contains("light-mode")) {
+        localStorage.setItem("theme", "light");
+    } else {
+        localStorage.setItem("theme", "dark");
+    }
+}
+function addCustomSession() {
+    const name = document.getElementById("name").value.trim();
+    const amount = parseInt(document.getElementById("customAmount").value);
+    const hours = parseFloat(document.getElementById("customHours").value);
+
+    if (!name) {
+        alert("Enter customer name");
+        return;
+    }
+
+    if (!amount || !hours) {
+        alert("Enter valid amount and hours");
+        return;
+    }
+
+    const minutes = hours * 60;
+
+    const newRef = sessionsRef.push();
+
+    newRef.set({
+        id: newRef.key,
+        name,
+        label: "₱" + amount + " (Custom)",
+        amount,
+        end: Date.now() + (minutes * 60000),
+        paused: false,
+        remaining: 0
+    }).then(() => {
+
+        revenueRef.transaction(curr => (curr || 0) + amount);
+
+        document.getElementById("name").value = "";
+        document.getElementById("customAmount").value = "";
+        document.getElementById("customHours").value = "";
+
+        const link =
+            "https://markyyfiew.github.io/pisowifi/client.html?id=" +
+            newRef.key;
+
+        showQR(link);
+    });
+}
+
+function clearHistory(){
+
+    if(!confirm(
+        "Delete all finished session history?\n\nThis action cannot be undone."
+    )){
+        return;
+    }
+
+    finishedRef.remove();
+
+    alert("Finished history cleared.");
+}
+
+function extendCustom(id){
+
+    let mins = prompt(
+        "Enter minutes to add:",
+        "30"
+    );
+
+    if(mins === null) return;
+
+    mins = parseInt(mins);
+
+    if(isNaN(mins) || mins <= 0){
+        alert("Invalid minutes");
+        return;
+    }
+
+    sessionsRef.child(id).once("value", snap => {
+
+        const s = snap.val();
+
+        if(!s) return;
+
+        if(s.paused){
+
+            sessionsRef.child(id).update({
+                remaining: (s.remaining || 0) + (mins * 60000)
+            });
+
+        }else{
+
+            sessionsRef.child(id).update({
+                end: s.end + (mins * 60000)
+            });
+
+        }
+
+    });
+
+}
+function extendCustom(id){
+
+    let hours = prompt("Hours to add:", "1");
+
+    if(hours === null) return;
+
+    hours = parseFloat(hours);
+
+    if(isNaN(hours) || hours <= 0){
+        alert("Invalid hours");
+        return;
+    }
+
+    const addMs = hours * 3600000;
+
+    sessionsRef.child(id).once("value", snap => {
+
+        const s = snap.val();
+
+        if(!s) return;
+
+        if(s.paused){
+
+            sessionsRef.child(id).update({
+                remaining: (s.remaining || 0) + addMs
+            });
+
+        }else{
+
+            sessionsRef.child(id).update({
+                end: s.end + addMs
+            });
+
+        }
+
+    });
+
+}
