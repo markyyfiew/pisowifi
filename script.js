@@ -103,17 +103,32 @@ function addSession(label, amount, minutes){
 
         // ✅ FIXED LINK
         const link =
-            "https://markyyfiew.github.io/pisowifi/client.html?id=" +
-            newRef.key;
+    "https://markyyfiew.github.io/pisowifi/client.html?id=" +
+    newRef.key;
 
-        alert(
-            "Session Created!\n\n" +
-            "Customer: " + name +
-            "\n\nClient Link:\n" +
-            link
-        );
+showQR(link);
 
     });
+}
+function showQR(link){
+
+    document.getElementById("qrContainer").style.display = "block";
+
+    document.getElementById("sessionLink").value = link;
+
+    const qrDiv = document.getElementById("qrcode");
+
+    qrDiv.innerHTML = "";
+
+    new QRCode(qrDiv, {
+        text: link,
+        width: 250,
+        height: 250
+    });
+}
+
+function closeQR(){
+    document.getElementById("qrContainer").style.display = "none";
 }
 
 /* =========================
@@ -293,4 +308,4 @@ function showPage(pageId) {
     document.getElementById(pageId)?.classList.add("active-page");
 
     document.getElementById("sidebar")?.classList.remove("active");
-}
+            }
