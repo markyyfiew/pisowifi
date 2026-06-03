@@ -232,12 +232,37 @@
 
 </div>
 
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
+<!-- Firebase Config -->
 <script src="firebase.js"></script>
+
+<!-- ✅ QR CODE LIBRARY (IMPORTANT - DAPAT NASA TAAS NG script.js) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<!-- Main Script -->
 <script src="script.js"></script>
-    
-</body>
+
+<!-- QR CODE MODAL -->
+<div id="qrContainer" style="display:none; text-align:center; padding:20px;">
+    <h2>📱 Scan QR Code</h2>
+
+    <div id="qrcode"></div>
+
+    <br>
+
+    <input
+        type="text"
+        id="sessionLink"
+        readonly
+        style="width:90%;padding:10px;">
+
+    <br><br>
+
+    <button onclick="closeQR()">Close</button>
+</div>
+
 </body>
 </html>
