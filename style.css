@@ -348,6 +348,21 @@ td{
     background:white;
     color:#111827;
 }
+.light-mode .sidebar a{
+    color:#111827;
+}
+
+.light-mode .sidebar a:hover{
+    color:white;
+}
+
+.light-mode .profile p{
+    color:#475569;
+}
+
+.light-mode .logout-btn{
+    color:white;
+}
 
 .light-mode input{
     border:1px solid #ccc;
@@ -385,3 +400,263 @@ td{
 .sidebar a.active-link{
     background:#2563eb;
 }
+
+/* =========================
+   LOGIN PAGE UI (ADD-ON ONLY)
+========================= */
+
+.login-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+.login-card {
+    width: 340px;
+    padding: 30px;
+    border-radius: 18px;
+
+    background: rgba(30, 41, 59, 0.95);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+    text-align: center;
+    color: white;
+}
+
+.login-card .logo {
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+.login-card h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.login-card p {
+    color: #cbd5e1;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* LOGIN INPUTS (separate from admin inputs) */
+.login-card input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #0f172a;
+    color: white;
+
+    outline: none;
+}
+
+.login-card input:focus {
+    outline: 2px solid #2563eb;
+}
+
+/* LOGIN BUTTON */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: linear-gradient(90deg, #2563eb, #06b6d4);
+    color: white;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    transform: scale(1.05);
+}
+
+/* ERROR TEXT */
+.error-msg {
+    margin-top: 10px;
+    color: #ef4444;
+    font-size: 14px;
+}
+/* =========================
+   SETTINGS UI FIXED
+========================= */
+
+#settingsPage .panel {
+    background: #1e293b;
+    border-radius: 16px;
+    padding: 25px;
+}
+
+/* ALL SETTINGS BUTTONS */
+#settingsPage .panel button {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+
+    border: none;
+    border-radius: 12px;
+
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+/* 🌙 Toggle Dark Mode */
+#settingsPage .panel button:nth-of-type(1) {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+}
+
+/* 🔑 Change Password */
+#settingsPage .panel button:nth-of-type(2) {
+    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+}
+
+/* 🗑 Clear Data */
+#settingsPage .panel button:nth-of-type(3) {
+    background: linear-gradient(135deg, #ef4444, #f97316);
+}
+
+/* HOVER EFFECT (ALL BUTTONS) */
+#settingsPage .panel button:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+/* ACTIVE CLICK FEEL */
+#settingsPage .panel button:active {
+    transform: scale(0.98);
+}
+/*Add session ui*/
+.custom-box {
+    margin-top: 15px;
+    padding: 15px;
+    background: #0f172a;
+    border-radius: 12px;
+}
+
+.custom-box h3 {
+    margin-bottom: 10px;
+}
+
+.custom-box input {
+    margin-bottom: 10px;
+}
+/*clear history ui*/
+.history-warning{
+    color:#fca5a5;
+    font-size:14px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+/* =========================
+   QR MODAL
+========================= */
+
+.qr-modal{
+    display:none;
+
+    position:fixed;
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,.75);
+
+    z-index:9999;
+
+    justify-content:center;
+    align-items:center;
+}
+
+.qr-card{
+
+    background:#1e293b;
+
+    width:90%;
+    max-width:400px;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.4);
+}
+
+.qr-card h2{
+    margin-bottom:8px;
+}
+
+.qr-subtitle{
+    color:#cbd5e1;
+    margin-bottom:20px;
+}
+
+#qrcode{
+    display:flex;
+    justify-content:center;
+    margin:15px 0;
+}
+
+#qrcode img{
+    border-radius:10px;
+    background:white;
+    padding:10px;
+}
+
+.session-info input{
+    width:100%;
+    margin-top:10px;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+}
+
+.copy-btn{
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+
+    background:#10b981;
+    color:white;
+
+    border:none;
+    border-radius:10px;
+
+    cursor:pointer;
+}
+
+.close-btn-modal{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+
+    background:#ef4444;
+    color:white;
+
+    border:none;
+    border-radius:10px;
+
+    cursor:pointer;
+}
+
+
